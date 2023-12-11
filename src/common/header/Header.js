@@ -8,9 +8,10 @@ import { Tab } from "@material-ui/core";
 import { Tabs } from "@material-ui/core";
 import Register from "../../screens/register/Register";
 import Login from "../../screens/login/Login";
+import authService from "../../services/AuthService";
 
 export default function Header() {
-    const [ ,setLoggedIn] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(false);
     const [isModalOpen, setToggleModal] = useState(false);
     const [tabValue, setTabValue] = useState(0);
 
@@ -24,6 +25,15 @@ export default function Header() {
         }
     }, []);
 
+    useEffect(() => {
+        const accessToken = sessionStorage.getItem('access-token');
+        if (accessToken) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
+        }
+    }, [isLoggedIn]);
+
     // Toggle Modal
     function toggleModal() {
         setToggleModal(!isModalOpen);
@@ -31,6 +41,22 @@ export default function Header() {
 
     const handleTabValueChange = (event, value) => {
         setTabValue(value);
+    };
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await authService.logoutService();
+            if (response) {
+                console.log("Logout successful");
+                // Redirect to home screen using window.location
+                window.location.href = '/';
+            } else {
+                console.error("Logout error:");
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     };
 
     const modalStyle = {
@@ -54,8 +80,7 @@ export default function Header() {
                         Doctor Finder
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
-                    {(true) ?
-                        //{(isLoggedIn) ?
+                    {(!isLoggedIn) ?
                         <Button
                             variant="contained"
                             color="primary"
@@ -67,6 +92,7 @@ export default function Header() {
                         <Button
                             variant="contained"
                             color="secondary"
+                            onClick={handleLogout}
                         >
                             LOGOUT
                         </Button>

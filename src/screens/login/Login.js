@@ -3,6 +3,7 @@ import { Container, TextField, Button, Typography } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
+import authService from "../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -29,7 +30,7 @@ const Login = () => {
 
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState(false);
-    
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [error, setError] = useState(null);
 
@@ -44,7 +45,7 @@ const Login = () => {
         setPassword("");
     };
 
-    const validateForm = (event) => {
+    const validateForm = () => {
         if (email.trim() === "") {
             setEmailError(true);
             setAnchorEl(document.getElementById("email"));
@@ -63,11 +64,18 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm(e)) {
+        if (validateForm()) {
             try {
-                console.log("Login successful");
-                // Reset the form
-                initialState();
+                const response = await authService.loginService(email, password);
+                if (response) {
+                    console.log("Login successful");
+                    // Reset the form
+                    initialState();
+                    // Redirect to home screen using window.location
+                    window.location.href = '/';
+                } else {
+                    console.error("Login error:");
+                }
             } catch (error) {
                 console.error("Login error:", error);
                 setError(error.message);

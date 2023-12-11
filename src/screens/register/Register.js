@@ -3,6 +3,7 @@ import { Container, TextField, Button, Typography } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
+import authService from "../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -59,7 +60,7 @@ const Register = () => {
         setContactNo("");
     }
 
-    const validateForm = (event) => {
+    const validateForm = () => {
         if (firstName.trim() === "") {
             setFirstNameError(true);
             setAnchorEl(document.getElementById("firstName"));
@@ -90,13 +91,20 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm(e)) {
+        if (validateForm()) {
             try {
-                console.log("Registered successful");
-                // Reset the form
-                initialState();
+                const response = await authService.registerService(email, password, firstName, lastName, contactNo);
+                if (response) {
+                    console.log("Registered successful");
+                    // Reset the form
+                    initialState();
+                    // Redirect to home screen using window.location
+                    window.location.href = '/';
+                } else {
+                    console.error("Registered error:");
+                }
             } catch (error) {
-                console.error("Sign Up error:", error);
+                console.error("Login error:", error);
                 setError(error.message);
             }
         }
