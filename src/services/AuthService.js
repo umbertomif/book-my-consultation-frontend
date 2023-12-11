@@ -19,6 +19,9 @@ const authService = {
             const responseData = await response.json();
             if (responseData) {
                 sessionStorage.setItem("access-token", responseData.accessToken);
+                sessionStorage.setItem("user-id", responseData.id);
+                sessionStorage.setItem("user-firstName", responseData.firstName);
+                sessionStorage.setItem("user-lastName", responseData.lastName);
                 return true;
             } else {
                 throw new Error('Login failed. Please try again.');
@@ -39,30 +42,27 @@ const authService = {
                 method: 'POST',
                 headers: headers
             });
-            if (!response.ok) {
+            if (!response.status === 200) {
                 throw new Error('Logout failed. Please try again.');
             }
-            const responseData = await response.json();
-            if (responseData) {
-                sessionStorage.removeItem("access-token");
-                return true;
-            } else {
-                throw new Error('Logout failed. Please try again.');
-            }
+            sessionStorage.removeItem("access-token");
+            sessionStorage.removeItem("user-id");
+            sessionStorage.removeItem("user-firstName");
+            sessionStorage.removeItem("user-lastName");
+            return true;
         } catch (error) {
             throw new Error(error.message);
         }
     },
 
-    registerService: async (emailId, password, firstName, lastName, mobile, dob) => {
+    registerService: async (emailId, password, firstName, lastName, mobile) => {
         const url = 'http://localhost:8080/users/register';
         const data = {
             emailId,
             password,
             firstName,
             lastName,
-            mobile,
-            dob
+            mobile
         };
         try {
             const response = await fetch(url, {

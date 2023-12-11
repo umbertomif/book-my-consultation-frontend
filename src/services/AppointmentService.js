@@ -1,4 +1,4 @@
-const ratingService = {
+const appointmentService = {
 
     bookAppointment: async (
         doctorId,
@@ -66,4 +66,4 @@ const ratingService = {
     },
 }
 
-export default ratingService;
+export default appointmentService;
