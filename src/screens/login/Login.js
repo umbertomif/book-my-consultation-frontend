@@ -51,6 +51,11 @@ const Login = () => {
             setAnchorEl(document.getElementById("email"));
             return false;
         }
+        const emailRegex = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\\.,;:\s@"]{2,})$/i;
+        if (!email.match(emailRegex)) {
+            setEmailError(true);
+            return false;
+        }
         if (password.trim() === "") {
             setPasswordError(true);
             setAnchorEl(document.getElementById("password"));
@@ -111,7 +116,7 @@ const Login = () => {
                         value={email}
                         onInput={e => { setEmail(e.target.value) }}
                         error={emailError}
-                        helperText={emailError ? "Email is required" : ""}
+                        helperText={emailError ? "Enter valid Email" : ""}
                     />
                     <TextField
                         variant="standard"
