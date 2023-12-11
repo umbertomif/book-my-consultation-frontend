@@ -42,6 +42,7 @@ const Register = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
@@ -53,6 +54,7 @@ const Register = () => {
         setPasswordError(null);
         setContactNoError(null);
         setError(null);
+        setSuccess(null);
         setFirstName("");
         setLastName("");
         setEmail("");
@@ -76,6 +78,11 @@ const Register = () => {
             setAnchorEl(document.getElementById("email"));
             return false;
         }
+        const emailRegex = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\\.,;:\s@"]{2,})$/i;
+        if (!email.match(emailRegex)) {
+            setEmailError(true);
+            return false;
+        }
         if (password.trim() === "") {
             setPasswordError(true);
             setAnchorEl(document.getElementById("password"));
@@ -84,6 +91,11 @@ const Register = () => {
         if (contactNo.trim() === "") {
             setContactNoError(true);
             setAnchorEl(document.getElementById("contactNo"));
+            return false;
+        }
+        const contactNoRegex = /^[6-9]\d{9}$/i;
+        if (!contactNo.match(contactNoRegex)) {
+            setContactNoError(true);
             return false;
         }
         return true
@@ -95,11 +107,10 @@ const Register = () => {
             try {
                 const response = await authService.registerService(email, password, firstName, lastName, contactNo);
                 if (response) {
-                    console.log("Registered successful");
-                    // Reset the form
-                    initialState();
+                    console.log("Registration Successful");
                     // Redirect to home screen using window.location
-                    window.location.href = '/';
+                    setSuccess("Registration Successful");
+                    handleLogin();
                 } else {
                     console.error("Registered error:");
                 }
@@ -107,6 +118,24 @@ const Register = () => {
                 console.error("Login error:", error);
                 setError(error.message);
             }
+        }
+    };
+
+    const handleLogin = async () => {
+        try {
+            const response = await authService.loginService(email, password);
+            if (response) {
+                console.log("Login successful");
+                // Reset the form
+                initialState();
+                // Redirect to home screen using window.location
+                window.location.href = '/';
+            } else {
+                console.error("Login error:");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            setError(error.message);
         }
     };
 
@@ -162,7 +191,7 @@ const Register = () => {
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         error={emailError}
-                        helperText={emailError ? "Username is required" : ""}
+                        helperText={emailError ? "Enter valid Email" : ""}
                     />
                     <TextField
                         variant="standard"
@@ -188,7 +217,7 @@ const Register = () => {
                         type="number"
                         onChange={(e) => setContactNo(e.target.value)}
                         error={contactNoError}
-                        helperText={contactNoError ? "Phone is required" : ""}
+                        helperText={contactNoError ? "Enter valid mobile number" : ""}
                     />
                     <div
                         style={{
@@ -228,6 +257,12 @@ const Register = () => {
                 error &&
                 <Alert variant="filled" severity="error">
                     {error}
+                </Alert>
+            }
+            {
+                success &&
+                <Alert variant="filled" severity="success">
+                    {success}
                 </Alert>
             }
         </>
