@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import logoImage from "../../assets/logo.jpeg";
-import { Box, AppBar, Toolbar, Typography, Button, Container } from '@material-ui/core';
+import { Box, AppBar, Toolbar, Typography, Button, Card } from '@material-ui/core';
 
 import Modal from "react-modal";
 import { Tab } from "@material-ui/core";
@@ -99,7 +99,7 @@ export default function Header() {
                     }
                 </Toolbar>
             </AppBar>
-            <Container component="main" maxWidth="xs">
+            <Card component="main">
                 <Modal
                     ariaHideApp={false}
                     isOpen={isModalOpen}
@@ -121,7 +121,7 @@ export default function Header() {
                         <Register />
                     )}
                 </Modal>
-            </Container>
+            </Card>
         </>
     );
 }

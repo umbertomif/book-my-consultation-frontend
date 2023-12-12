@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Container, TextField, Button, Typography } from "@material-ui/core";
+import { Container, Button, Typography, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import { Alert } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
 import authService from "../../services/AuthService";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: "14px",
     },
+    formControl: {
+        margin: 10
+    },
+    container: {
+        textAlign: "center"
+    }
 }));
 
 const Register = () => {
@@ -108,9 +114,11 @@ const Register = () => {
                 const response = await authService.registerService(email, password, firstName, lastName, contactNo);
                 if (response) {
                     console.log("Registration Successful");
-                    // Redirect to home screen using window.location
                     setSuccess("Registration Successful");
-                    handleLogin();
+                    // wait for 2 second and after log in.
+                    setTimeout(() => {
+                        handleLogin();
+                    }, 2000);
                 } else {
                     console.error("Registered error:");
                 }
@@ -154,71 +162,74 @@ const Register = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className={classes.container}>
                 <form className={classes.form} onSubmit={handleSubmit} noValidate>
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="firstName"
-                        label="First Name"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        error={firstNameError}
-                        helperText={firstNameError ? "First Name is required" : ""}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="lastName"
-                        label="Last Name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        error={lastNameError}
-                        helperText={lastNameError ? "Last Name is required" : ""}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="email"
-                        label="Email Address"
-                        value={email}
-                        type="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        error={emailError}
-                        helperText={emailError ? "Enter valid Email" : ""}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="password"
-                        label="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        error={passwordError}
-                        helperText={passwordError ? "Password is required" : ""}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="phone"
-                        label="Mobile No."
-                        value={contactNo}
-                        type="number"
-                        onChange={(e) => setContactNo(e.target.value)}
-                        error={contactNoError}
-                        helperText={contactNoError ? "Enter valid mobile number" : ""}
-                    />
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="firstName">First Name</InputLabel>
+                        <Input
+                            id="firstName"
+                            value={firstName}
+                            onChange={({ target }) => setFirstName(target.value)}
+                        />
+                        {firstNameError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>First Name is required</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="lastName">Last Name</InputLabel>
+                        <Input
+                            id="lastName"
+                            value={lastName}
+                            onChange={({ target }) => setLastName(target.value)}
+                        />
+                        {lastNameError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Last Name is required</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="email">Email</InputLabel>
+                        <Input
+                            id="email"
+                            value={email}
+                            onChange={({ target }) => setEmail(target.value)}
+                        />
+                        {emailError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Enter valid Email</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <Input
+                            id="password"
+                            value={password}
+                            onChange={({ target }) => setPassword(target.value)}
+                            type="password"
+                        />
+                        {passwordError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Password is required</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl required={true}>
+                        <InputLabel htmlFor="contactNo">Mobile No.</InputLabel>
+                        <Input
+                            id="contactNo"
+                            value={contactNo}
+                            onChange={({ target }) => setContactNo(target.value)}
+                        />
+                        {contactNoError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Enter valid mobile number</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
                     <div
                         style={{
                             display: "flex",

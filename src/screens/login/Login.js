@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, TextField, Button, Typography } from "@material-ui/core";
+import { Container, Button, Typography, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: "14px",
     },
+    formControl: {
+        margin: 15
+    },
+    container: {
+        textAlign: "center"
+    }
 }));
 
 const Login = () => {
@@ -103,34 +109,35 @@ const Login = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className={classes.container}>
                 <form className={classes.form} onSubmit={handleSubmit} noValidate>
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        autoComplete="email"
-                        value={email}
-                        onInput={e => { setEmail(e.target.value) }}
-                        error={emailError}
-                        helperText={emailError ? "Enter valid Email" : ""}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        label="Password"
-                        type="password"
-                        value={password}
-                        onInput={e => setPassword(e.target.value)}
-                        error={passwordError}
-                        helperText={passwordError ? "Password is required" : ""}
-                    />
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="email">Email</InputLabel>
+                        <Input
+                            id="email"
+                            value={email}
+                            onChange={({ target }) => setEmail(target.value)}
+                        />
+                        {emailError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Enter valid Email</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <Input
+                            id="password"
+                            value={password}
+                            onChange={({ target }) => setPassword(target.value)}
+                            type="password"
+                        />
+                        {passwordError === true && (
+                            <FormHelperText>
+                                <span style={{ color: "red" }}>Password is required</span>
+                            </FormHelperText>
+                        )}
+                    </FormControl>
                     <div
                         style={{
                             display: "flex",

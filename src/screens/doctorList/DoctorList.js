@@ -117,13 +117,13 @@ const DoctorList = () => {
                             <Typography component="h4" variant="body1">
                                 Rating : <Rating name="read-only" value={doctor.rating} readOnly />
                             </Typography>
-                            <Button style={{ width: "45%", margin: "10px" }}
-                                variant="contained" 
+                            <Button style={{ width: "40%", margin: "10px" }}
+                                variant="contained"
                                 color="primary"
                             >
                                 Book Appointment
                             </Button>
-                            <Button style={{ width: "45%", margin: "10px", backgroundColor: 'green' }}
+                            <Button style={{ width: "40%", margin: "10px", backgroundColor: 'green' }}
                                 variant="contained"
                                 color="primary"
                             >
