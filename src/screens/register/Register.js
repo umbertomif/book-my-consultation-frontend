@@ -123,7 +123,7 @@ const Register = () => {
                     console.error("Registered error:");
                 }
             } catch (error) {
-                console.error("Login error:", error);
+                console.error("Registered error:", error);
                 setError(error.message);
             }
         }

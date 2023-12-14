@@ -10,7 +10,7 @@ import Register from "../../screens/register/Register";
 import Login from "../../screens/login/Login";
 import authService from "../../services/AuthService";
 
-export default function Header() {
+const Header = () => {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isModalOpen, setToggleModal] = useState(false);
     const [tabValue, setTabValue] = useState(0);
@@ -24,7 +24,7 @@ export default function Header() {
             setLoggedIn(false);
         }
     }, []);
-
+    
     useEffect(() => {
         const accessToken = sessionStorage.getItem('access-token');
         if (accessToken) {
@@ -125,3 +125,5 @@ export default function Header() {
         </>
     );
 }
+
+export default Header;

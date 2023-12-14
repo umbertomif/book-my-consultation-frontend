@@ -1,30 +1,7 @@
 const appointmentService = {
 
-    bookAppointment: async (
-        doctorId,
-        doctorName,
-        userId,
-        userName,
-        userEmailId,
-        timeSlot,
-        appointmentDate,
-        createdDate,
-        symptoms,
-        priorMedicalHistory
-    ) => {
+    bookAppointment: async (data) => {
         const url = 'http://localhost:8080/appointments';
-        const data = {
-            doctorId,
-            doctorName,
-            userId,
-            userName,
-            userEmailId,
-            timeSlot,
-            appointmentDate,
-            createdDate,
-            symptoms,
-            priorMedicalHistory,
-        };
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + sessionStorage.getItem("access-token"),

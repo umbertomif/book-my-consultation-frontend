@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem, Typography, Grid, Paper, Button } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import Modal from "react-modal";
 import doctorService from "../../services/DoctorService";
-import "./DoctorList.css";
+import DoctorDetails from "./DoctorDetails";
+import BookAppointment from "./BookAppointment";
 
 const DoctorList = () => {
 
     const [specialityList, setSpecialityList] = useState([]);
     const [doctorsList, setDoctorList] = useState([]);
     const [speciality, setSpeciality] = useState("");
+    const [doctor, setDoctor] = useState("");
+    const [isModalDoctorDetailsOpen, setToggleDoctorDetailsModal] = useState(false);
+    const [isModalBookAppointmentOpen, setToggleBookAppointmentModal] = useState(false);
 
     const getSpeciality = async () => {
         try {
@@ -57,6 +62,24 @@ const DoctorList = () => {
         getFilteredDoctors(event.target.value);
     };
 
+    const toggleDoctorDetailsModal = () => {
+        setToggleDoctorDetailsModal(!isModalDoctorDetailsOpen);
+    }
+
+    const toggleBookAppointmentModal = () => {
+        setToggleBookAppointmentModal(!isModalBookAppointmentOpen);
+    }
+
+    const doctorDetails = (doctor) => {
+        setDoctor(doctor);
+        toggleDoctorDetailsModal(true);
+    }
+
+    const bookAppointment = (doctor) => {
+        setDoctor(doctor);
+        setToggleBookAppointmentModal(true);
+    }
+
     useEffect(() => {
         getSpeciality();
         getDoctorsList();
@@ -80,6 +103,31 @@ const DoctorList = () => {
 
     const selectStyle = {
         minWidth: "250px"
+    };
+
+    const doctorDetailsModal = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            padding: "0px",
+        },
+    };
+
+    const bookingAppointmentModal = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            width: "40%",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            padding: "0px",
+        },
     };
 
     return (
@@ -120,12 +168,14 @@ const DoctorList = () => {
                             <Button style={{ width: "40%", margin: "10px" }}
                                 variant="contained"
                                 color="primary"
+                                onClick={() => { bookAppointment(doctor) }}
                             >
                                 Book Appointment
                             </Button>
                             <Button style={{ width: "40%", margin: "10px", backgroundColor: 'green' }}
                                 variant="contained"
                                 color="primary"
+                                onClick={() => { doctorDetails(doctor) }}
                             >
                                 View Details
                             </Button>
@@ -133,6 +183,22 @@ const DoctorList = () => {
                     )
                 })}
             </Grid>
+            <Modal
+                style={bookingAppointmentModal}
+                ariaHideApp={false}
+                isOpen={isModalBookAppointmentOpen}
+                onRequestClose={toggleBookAppointmentModal}
+            >
+                <BookAppointment doctor={doctor} setToggleBookAppointmentModal={setToggleBookAppointmentModal} />
+            </Modal>
+            <Modal
+                style={doctorDetailsModal}
+                ariaHideApp={false}
+                isOpen={isModalDoctorDetailsOpen}
+                onRequestClose={toggleDoctorDetailsModal}
+            >
+                <DoctorDetails doctor={doctor} />
+            </Modal>
         </>
     );
 }
