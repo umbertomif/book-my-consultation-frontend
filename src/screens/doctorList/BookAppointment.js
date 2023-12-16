@@ -240,7 +240,7 @@ const BookAppointment = ({ doctor, setToggleBookAppointmentModal }) => {
                         variant="contained"
                         color="primary"
                     >
-                        Book Appointment
+                        BOOK APPOINTMENT
                     </Button>
                     {
                         bookedSuccessfully &&

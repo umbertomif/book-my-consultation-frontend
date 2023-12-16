@@ -1,13 +1,7 @@
 const ratingService = {
 
-    ratings: async (appointmentId, doctorId, rating, comments) => {
+    ratings: async (data) => {
         const url = 'http://localhost:8080/ratings';
-        const data = {
-            appointmentId,
-            doctorId,
-            rating,
-            comments
-        };
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + sessionStorage.getItem("access-token"),
