@@ -41,8 +41,7 @@ const Header = () => {
         try {
             const response = await authService.logoutService();
             if (response) {
-                // Redirect to home screen using window.location
-                window.location.href = '/';
+                setLoggedIn(false);
             } else {
                 console.error("Logout error:");
             }
@@ -113,10 +112,10 @@ const Header = () => {
                         <Tab label="Register" />
                     </Tabs>
                     {tabValue === 0 && (
-                        <Login />
+                        <Login setLoggedIn={setLoggedIn} toggleModal={toggleModal}/>
                     )}
                     {tabValue === 1 && (
-                        <Register />
+                        <Register setLoggedIn={setLoggedIn} toggleModal={toggleModal}/>
                     )}
                 </Modal>
             </Card>

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Register = () => {
+const Register = ({ setLoggedIn, toggleModal }) => {
 
     const classes = useStyles();
 
@@ -136,8 +136,8 @@ const Register = () => {
                 console.log("Login successful");
                 // Reset the form
                 initialState();
-                // Redirect to home screen using window.location
-                window.location.href = '/';
+                setLoggedIn(true);
+                toggleModal();
             } else {
                 console.error("Login error:");
             }

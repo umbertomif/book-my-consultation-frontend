@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Login = () => {
+const Login = ({ setLoggedIn, toggleModal }) => {
 
     const classes = useStyles();
 
@@ -80,10 +80,9 @@ const Login = () => {
                 const response = await authService.loginService(email, password);
                 if (response) {
                     console.log("Login successful");
-                    // Reset the form
                     initialState();
-                    // Redirect to home screen using window.location
-                    window.location.href = '/';
+                    setLoggedIn(true);
+                    toggleModal();
                 } else {
                     console.error("Login error:");
                 }
