@@ -7,7 +7,7 @@ import appointmentService from "../../services/AppointmentService";
 import DateFnsUtils from "@date-io/date-fns";
 import "./BookAppointment.css"
 
-const BookAppointment = ({ doctor, setToggleBookAppointmentModal }) => {
+const BookAppointment = ({ doctor, toggleBookAppointmentModal }) => {
 
     const dateFormatter = (date) => {
         // Check if date is a valid Date object
@@ -137,7 +137,7 @@ const BookAppointment = ({ doctor, setToggleBookAppointmentModal }) => {
                     console.log("Book Appointment Successful");
                     setBookedSuccessfully(true);
                     setTimeout(() => {
-                        setToggleBookAppointmentModal(false);
+                        toggleBookAppointmentModal();
                     }, 2000)
                 }
             } catch (error) {

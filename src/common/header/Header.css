@@ -18,9 +18,11 @@
     margin-right: 10px;
 }
 
-.box-container {
-    color: white;
-    background-color: purple;
-    padding: 10px;
+.card-header {
+    max-height: 70px !important;
+    min-height: 48px !important;
+    padding: 11px;
     margin: 0;
+    background-color: purple;
+    color: white;
 }

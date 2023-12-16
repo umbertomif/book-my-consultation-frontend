@@ -191,7 +191,7 @@ const DoctorList = () => {
                 isOpen={isModalBookAppointmentOpen}
                 onRequestClose={toggleBookAppointmentModal}
             >
-                <BookAppointment doctor={doctor} setToggleBookAppointmentModal={setToggleBookAppointmentModal} />
+                <BookAppointment doctor={doctor} toggleBookAppointmentModal={toggleBookAppointmentModal} />
             </Modal>
             <Modal
                 style={doctorDetailsModal}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import logoImage from "../../assets/logo.jpeg";
-import { Box, AppBar, Toolbar, Typography, Button, Card } from '@material-ui/core';
+import { Box, AppBar, Toolbar, Typography, Button, Card, Paper, CardHeader, CardContent } from '@material-ui/core';
 
 import Modal from "react-modal";
 import { Tab } from "@material-ui/core";
@@ -104,19 +104,21 @@ const Header = () => {
                     style={modalStyle}
                     centered
                 >
-                    <Box className="box-container" >
-                        Authentication
-                    </Box>
-                    <Tabs value={tabValue} onChange={handleTabValueChange}>
-                        <Tab label="Login" />
-                        <Tab label="Register" />
-                    </Tabs>
-                    {tabValue === 0 && (
-                        <Login setLoggedIn={setLoggedIn} toggleModal={toggleModal}/>
-                    )}
-                    {tabValue === 1 && (
-                        <Register setLoggedIn={setLoggedIn} toggleModal={toggleModal}/>
-                    )}
+                    <Paper variant="elevation" elevation={2}>
+                        <CardHeader className="card-header" title="Authentication" />
+                        <CardContent>
+                            <Tabs value={tabValue} onChange={handleTabValueChange}>
+                                <Tab label="Login" />
+                                <Tab label="Register" />
+                            </Tabs>
+                            {tabValue === 0 && (
+                                <Login setLoggedIn={setLoggedIn} toggleModal={toggleModal} />
+                            )}
+                            {tabValue === 1 && (
+                                <Register setLoggedIn={setLoggedIn} toggleModal={toggleModal} />
+                            )}
+                        </CardContent>
+                    </Paper>
                 </Modal>
             </Card>
         </>
