@@ -8,10 +8,57 @@ import BookAppointment from "./BookAppointment";
 
 const DoctorList = () => {
 
+    const gridStyle = {
+        padding: 10,
+        margin: 2,
+    };
+
+    const paperStyle = {
+        padding: 20,
+        margin: 2,
+        width: "40%",
+    };
+
+    const typographyStyle = {
+        textAlign: "center",
+        padding: 10
+    };
+
+    const selectStyle = {
+        minWidth: "250px"
+    };
+
+    const doctorDetailsModal = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            padding: "0px",
+        },
+    };
+
+    const bookingAppointmentModal = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            width: "40%",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            padding: "0px",
+        },
+    };
+
     const [specialityList, setSpecialityList] = useState([]);
-    const [doctorsList, setDoctorList] = useState([]);
     const [speciality, setSpeciality] = useState("");
+    
+    const [doctorsList, setDoctorList] = useState([]);
     const [doctor, setDoctor] = useState("");
+    
     const [isModalDoctorDetailsOpen, setToggleDoctorDetailsModal] = useState(false);
     const [isModalBookAppointmentOpen, setToggleBookAppointmentModal] = useState(false);
 
@@ -84,51 +131,6 @@ const DoctorList = () => {
         getSpeciality();
         getDoctorsList();
     }, []);
-
-    const gridStyle = {
-        padding: 10,
-        margin: 2,
-    };
-
-    const paperStyle = {
-        padding: 20,
-        margin: 2,
-        width: "40%",
-    };
-
-    const typographyStyle = {
-        textAlign: "center",
-        padding: 10
-    };
-
-    const selectStyle = {
-        minWidth: "250px"
-    };
-
-    const doctorDetailsModal = {
-        content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            padding: "0px",
-        },
-    };
-
-    const bookingAppointmentModal = {
-        content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            width: "40%",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            padding: "0px",
-        },
-    };
 
     return (
         <>

@@ -10,10 +10,23 @@ import "./BookAppointment.css"
 const BookAppointment = ({ doctor, setToggleBookAppointmentModal }) => {
 
     const dateFormatter = (date) => {
+        // Check if date is a valid Date object
+        if (!(date instanceof Date) || isNaN(date)) {
+            // Handle invalid date input
+            return 'Invalid Date';
+        }
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         return `${year}-${month}-${day}`;
+    };
+
+    const formStyle = {
+        margin: 10
+    };
+
+    const selectStyle = {
+        minWidth: "200px"
     };
 
     const [availableSlotList, setAvailableSlotList] = useState([]);
@@ -30,14 +43,6 @@ const BookAppointment = ({ doctor, setToggleBookAppointmentModal }) => {
 
     const [error, setError] = useState(null);
     const [bookedSuccessfully, setBookedSuccessfully] = useState(false);
-
-    const formStyle = {
-        margin: 10
-    };
-
-    const selectStyle = {
-        minWidth: "200px"
-    };
 
     const getAvailableSlots = async (doctorId, selectedDate) => {
         try {

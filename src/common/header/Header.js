@@ -11,30 +11,23 @@ import Login from "../../screens/login/Login";
 import authService from "../../services/AuthService";
 
 const Header = () => {
+
+    const modalStyle = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "50%",
+            padding: "0",
+            transform: "translate(-50%, -50%)",
+        }
+    };
+
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isModalOpen, setToggleModal] = useState(false);
     const [tabValue, setTabValue] = useState(0);
 
-    // Retrieve access-token data from session storage
-    useEffect(() => {
-        const accessToken = sessionStorage.getItem('access-token');
-        if (accessToken) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    }, []);
-    
-    useEffect(() => {
-        const accessToken = sessionStorage.getItem('access-token');
-        if (accessToken) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    }, [isLoggedIn]);
-
-    // Toggle Modal
     function toggleModal() {
         setToggleModal(!isModalOpen);
     }
@@ -48,7 +41,6 @@ const Header = () => {
         try {
             const response = await authService.logoutService();
             if (response) {
-                console.log("Logout successful");
                 // Redirect to home screen using window.location
                 window.location.href = '/';
             } else {
@@ -59,17 +51,23 @@ const Header = () => {
         }
     };
 
-    const modalStyle = {
-        content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "50%",
-            padding: "0",
-            transform: "translate(-50%, -50%)",
+    useEffect(() => {
+        const accessToken = sessionStorage.getItem('access-token');
+        if (accessToken) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        const accessToken = sessionStorage.getItem('access-token');
+        if (accessToken) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
+        }
+    }, [isLoggedIn]);
 
     return (
         <>

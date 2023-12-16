@@ -5,6 +5,7 @@ import DoctorList from "../doctorList/DoctorList";
 import Appointment from "../appointment/Appointment";
 
 const Home = () => {
+    
     const [tabValue, setTabValue] = useState(0);
 
     const tabSwitchHandler = (event, tabValue) => {
